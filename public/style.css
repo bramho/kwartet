@@ -1,0 +1,11 @@
+.wrapper {
+   margin-top: 20px;
+}
+
+.card {
+   text-align: center;
+   background-color: #ccc;
+   height: 400px;
+   line-height: 400px;
+   vertical-align: middle;
+}

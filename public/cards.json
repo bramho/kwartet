@@ -1,0 +1,50 @@
+{
+   "administratief" : [
+      "telemarketeers",
+      "klantenservice",
+      "productiemedewerker",
+      "administratief medewerker"
+   ],
+   "agrarisch" : [
+      "verkopers",
+      "monteur",
+      "financieel medewerker",
+      "medewerker"
+   ],
+   "arbeidsbemiddeling" : [
+      "account manager",
+      "administratief medewerker",
+      "bediening",
+      "financieel medewerker"
+   ],
+   "veiligheid" : [
+      "administratief medewerker",
+      "bewaker",
+      "politieagent",
+      "brandweerman"
+   ],
+   "bouw" : [
+      "afwerkers",
+      "administratief medewerker",
+      "financieel medewerker",
+      "monteur"
+   ],
+   "cultuur" : [
+      "bediening",
+      "medewerker reisorganisatie",
+      "coach",
+      "hulpkracht"
+   ],
+   "facilitair" : [
+      "schoonmaker",
+      "hovenier",
+      "koerier",
+      "productiemedewerker"
+   ],
+   "gezondheidszorg" : [
+      "medewerker kinderopvang",
+      "medisch assistent",
+      "maatschappelijkwerker",
+      "verpleegkundige"
+   ]
+}

@@ -4,29 +4,117 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   <title>Document</title>
+
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   <link rel="stylesheet" href="/public/style.css">
+
+   <title>Kwartet - V1.0</title>
 </head>
 <body>
 
-   <ul id="messages"></ul>
-   <form action="">
-      <input id="m" autocomplete="off" />
-      <button type="submit">Send</button>
-   </form>
+   <div class="container wrapper">
+      <div class="row">
+         <div class="col-sm-3">
+            <div class="card">Kaart 1</div>
+         </div>
+
+         <div class="col-sm-3">
+            <div class="card">Kaart 2</div>
+         </div>
+
+         <div class="col-sm-3">
+            <div class="card">Kaart 3</div>
+         </div>
+
+         <div class="col-sm-3">
+            <div class="card">Kaart 4</div>
+         </div>
+      </div>
+   </div>
+
+
+   <!-- <div id="username-container">
+      <span>Choose a username:</span>
+      <form id="username-form" action="">
+         <input id="username" autocomplete="off" />
+         <button type="submit">Choose</button>
+      </form>
+   </div>
+
+   <div id="message-container" style="display:none;">
+      <ul id="messages"></ul>
+      <form id="message-form" action="">
+         <input id="m" autocomplete="off" />
+         <button type="submit">Send</button>
+      </form>
+   </div> -->
 
    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
    <script src="/socket.io/socket.io.js"></script>
    <script>
      var socket = io();
 
-     $('form').submit(function(){
+     $('#username-form').submit(function() {
+        socket.emit('username', $('#username').val());
+        $('#username-container').hide();
+        $('#message-container').show();
+        return false;
+     });
+
+     $('#message-form').submit(function(){
        socket.emit('chat message', $('#m').val());
        $('#m').val('');
        return false;
      });
 
+     socket.on('user connected', function(data) {
+        $('#messages').append($('<li>').text(data.userConnect));
+     });
+
+     socket.on('username', function(username) {
+      $('#messages.').append($('<li>').text(username));
+     });
+
      socket.on('chat message', function(msg){
        $('#messages').append($('<li>').text(msg));
+     });
+
+     $(document).ready(function() {
+        $.getJSON( "/public/cards.json", function( data ) {
+            var deck = [];
+
+            $.each( data, function( key, val ) {
+               for(i = 0; i < val.length; i++) {
+                  switch(i) {
+                     case 0:
+                        deck.push("<li data-sector='" + key + "' data-otherValues='" + val[i+1] + ',' + val[i+2] + ',' + val[i+3] + "'>" + val[i] + "</li>");
+                     break;
+                     case 1:
+                        deck.push("<li data-sector='" + key + "' data-otherValues='" + val[i-1] + ',' + val[i+1] + ',' + val[i+2] + "'>" + val[i] + "</li>");
+                     break;
+                     case 2:
+                        deck.push("<li data-sector='" + key + "' data-otherValues='" + val[i-2] + ',' + val[i-1] + ',' + val[i+1] + "'>" + val[i] + "</li>");
+                     break;
+                     case 3:
+                        deck.push("<li data-sector='" + key + "' data-otherValues='" + val[i-3] + ',' + val[i-2] + ',' + val[i-1] + "'>" + val[i] + "</li>");
+                     break;
+                  }
+               }
+            });
+
+
+            var random = []
+            while(random.length < 4){
+                var randomnumber = Math.floor(Math.random() * deck.length)
+                if(random.indexOf(randomnumber) > -1) continue;
+                random[random.length] = deck[randomnumber];
+            }
+            $( "<ul/>", {
+                  "class": "my-new-list",
+                  html: random
+            }).appendTo( "body" );
+         });
      });
    </script>
 </body>
